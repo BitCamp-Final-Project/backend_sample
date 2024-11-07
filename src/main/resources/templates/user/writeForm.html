@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .signup-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+        }
+
+        button {
+            background-color: #E60023;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #cc001f;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="signup-container">
+    <h1>회원 가입</h1>
+    <form>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+        <div id="nameError" class="error-message"></div>
+
+        <label for="signupId">아이디</label>
+        <input type="text" id="signupId" name="signupId" placeholder="아이디를 입력하세요">
+        <div id="idError" class="error-message"></div>
+
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+        <div id="passwordError" class="error-message"></div>
+
+        <button type="submit">회원 가입</button>
+    </form>
+</div>
+
+<script>
+    // 아이디 중복 체크
+    $('#signupId').focusout(function() {
+        const id = $('#signupId').val();
+        $('#idError').empty();
+
+        if (id.trim() === '') {
+            $('#idError').text('아이디를 입력하세요.');
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/getExistId',
+            data: { id: id },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    $('#idError').text(response.message);
+                    $('#idError').css('color', 'green');
+                } else {
+                    $('#idError').text(response.message);
+                    $('#idError').css('color', 'red');
+                }
+            },
+            error: function() {
+                $('#idError').text('아이디 중복 체크 중 오류가 발생했습니다.');
+            }
+        });
+    });
+</script>
+</body>
+</html>
