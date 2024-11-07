@@ -1,7 +1,8 @@
 # Github Flow 전략
 
 저희 프로젝트는 **Github Flow**를 기반으로 한 브랜치 전략을 사용합니다.
-![스크린샷 2024-11-07 145754](https://github.com/user-attachments/assets/15c00538-862b-4f34-95c8-aa431a4436fa)
+![GitFlow](https://github.com/user-attachments/assets/7cc7d22a-816e-4113-bf87-919eae4d327f)
+
 
 ---
 
